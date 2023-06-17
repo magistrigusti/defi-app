@@ -7,8 +7,13 @@ body, #root {
   height: 100vh;
 }
 
+a {
+  color: white;
+  text-decoration: none;
+}
+
 .home {
-  background: linear-gradient(180deg, #12122e 0%, #272764 100% );
+  background: linear-gradient(180deg, #12122e 0%, #1d1d7a 100% );
   line-height: 38px;
   font-weight: 600;
   font-size: 1.125rem;
@@ -19,4 +24,40 @@ body, #root {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+}
+
+.header-container {
+  display: flex;
+  width: 100%;
+  padding: 20px 40px;
+}
+
+.header-container .menu {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.menu .menu-links a {
+  margin: 12px;
+  color: #fff;
+  text-decoration: none;
+}
+
+button {
+  border-radius: 10px;
+  border: none;
+  text-transform: uppercase;
+  padding: 10px 20px;
+}
+
+button.primary {
+  color: white;
+  background: linear-gradient(#30bddc 0%, #5189e1 100%);
+}
+
+span.highlighted {
+  border-radius: 5px;
+  background: linear-gradient(#30bddc 0%, #5189e1 100%);
+  padding: 0 10px;
 }
