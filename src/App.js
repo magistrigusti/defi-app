@@ -1,22 +1,13 @@
 import React, { useState } from 'react';
+import Counter from './components/Counter';
 
 
 function App() {
-  const [likes, setLikes] = useState(0);
-  
-  function increment() {
-    setLikes( likes + 1 );
-  }
-
-  function decrement() {
-    setLikes( likes - 1 );
-  }
+const [value, setValue] = useState('Kniaz');
   
   return (
     <div className="App">
-      <h1>{likes}</h1>
-      <button oClick={increment}>Increment</button>
-      <button onClick={decrement}>Decrement</button>
+      <Counter />
     </div>
   );
 }
