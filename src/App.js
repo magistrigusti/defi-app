@@ -1,12 +1,13 @@
+import React from 'react';
 
-import NavBar from './components/NavBar';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
 
 function App() {
+  let likes = 0;
   return (
     <div className="App">
-      <NavBar />
+    <h1>{likes}</h1>
+      <button onClick={() => likes += 1}>Increment</button>
+      <button onClick={() => likes -= 1}>Decrement</button>
     </div>
   );
 }
