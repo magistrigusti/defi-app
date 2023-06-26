@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import Counter from './components/Counter';
 import ClassCounter from './components/ClassCounter';
 import PostList from './components/PostList';
@@ -13,23 +13,33 @@ const [posts, setPosts] = useState([
   {id: 2, title: 'React', body: 'Description'},
   {id: 3, title: 'Redux', body: 'Description'},
 ]);
-const [title, setTitle] = useState('Kniaz');
+const [post, setPost] = useState({title: '', body: ''});
 const [body, setBody] = useState('Krasava');
 
 const addNewPost = (event) => {
   event.preventDefault();
+
+  const newPost = {
+    id: Date.now(),
+    post,
+    body
+  }
+  
+  setPosts([...posts, newPost]);
+  setPost('');
+  setBody(''); 
 }
   
   return (
     <div className="App">
       <form>
-        <MyInput onChange={event => setTitle(event.target.value)} value={title} />
+        <MyInput onChange={event => setPost({...post, title: event.target.value})} value={post.title} />
 
-        <MyInput onChange={event => setBody(event.target.value)} value={body} />
+        <MyInput onChange={event => setPost({...post, body: event.target.value})} value={post.body} />
         
         <MyButton onClick={addNewPost}>Add Post</MyButton>
       </form>
-      
+
       <PostList posts={posts} title={'Post List for JS'} />
     </div>
   );
