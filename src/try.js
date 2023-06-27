@@ -8,31 +8,23 @@ function App() {
   const [posts, setPosts] = useState([
     {id: 1, title: 'JS', body: 'description'}
   ]);
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
 
-  const addNewPost = (event) => {
-    event.preventDefault();
-
-    const newPost = {
-      id: Date.now(),
-      title,
-      body
-    }
+  const createPost = (newPost) => {
     setPosts([...posts, newPost]);
+  }
+
+  const removePost = (post) => {
+    setPosts(posts.filter(p => p.id !== post.id));
   }
 
   return (
     <div className="App">
-      <form>
-        <MyInput onChange={event => setTitle(event.target.value)} value={title} />
+      <PostForm create={createPost} />
 
-        <MyInput onChange={event => setBody(event.target.value)} value={body} />
-      </form>
-
-      <PostList posts={posts} title={'Post List for JS'} />
+      <PostList remove={removePost} posts={posts} title={'pst'} />
     </div>
   )
+
 }
 
 export default App;
