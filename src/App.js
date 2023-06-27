@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-import Counter from './components/Counter';
-import ClassCounter from './components/ClassCounter';
 import PostList from './components/PostList';
-import MyButton from './components/UI/button/MyButton';
-import MyInput from './components/UI/input/MyInput';
+import PostForm from './components/PostForm';
 import './styles/App.css';
 
 
@@ -18,27 +15,13 @@ const [body, setBody] = useState('Krasava');
 
 const addNewPost = (event) => {
   event.preventDefault();
-
-  const newPost = {
-    id: Date.now(),
-    post,
-    body
-  }
-  
-  setPosts([...posts, newPost]);
-  setPost('');
-  setBody(''); 
+  setPosts([...posts, {...post, id: Date.now()}]);
+  setPost(''); 
 }
   
   return (
     <div className="App">
-      <form>
-        <MyInput onChange={event => setPost({...post, title: event.target.value})} value={post.title} />
-
-        <MyInput onChange={event => setPost({...post, body: event.target.value})} value={post.body} />
-        
-        <MyButton onClick={addNewPost}>Add Post</MyButton>
-      </form>
+      <PostForm />
 
       <PostList posts={posts} title={'Post List for JS'} />
     </div>
