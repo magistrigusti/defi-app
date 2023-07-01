@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import PostList from './components/PostList';
 import PostForm from './component/PostForm';
 import MySelect from './components/UI/select/MySelect';
+import MyInput from './'
 import './styles/App.css';
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
   const [selectedSort, setSelectedSort] = useState('');
 
   const createPost = (newPost) => {
-    setPosts([...posts, newPost]);
+    setPosts([...posts], newPost);
   }
 
   const removePost = (post) => {
@@ -22,21 +23,31 @@ function App() {
 
   const sortPosts = (sort) => {
     setSelectedSort(sort);
-    setPosts([...posts].sort((a, b) => a[sort].localeCompare(b[sort])))
+    setPosts([...posts].sort((a, b) => a[sort].localeCompare(b[sort])));
   }
 
   return (
     <div className="App">
       <PostForm create={createPost} />
       <hr style={{margin: '15px'}} />
-
       <div>
-        <mySelect value={selectedSort} 
+        <input type='text' />
+        <MySelect value={selectedSort}
             onChange={sortPosts}
             defaultValue="sorting"
-            
+            options={[
+              {value: 'title', name: 'for name'},
+              {value: 'body', name: 'for descriptions'}
+            ]}
         />
       </div>
+
+      {posts.length !== 0
+        ?
+          <PostList remove={removePost} posts={posts} title={'post list for js'} />
+        :
+          <h1 style={{textAlign: 'center'}}>Posts not fuind</h1>
+      }
     </div>
   )
 }
