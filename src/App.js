@@ -1,7 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import PostList from './components/PostList';
 import PostForm from './components/PostForm';
-import PostFilter from './components/PostFilter';
+import PostFilter from './components/PostFilter'; 
+import MyModal from './components/UI/MyModal/MyModal';
+import MyButton from './components/UI/button/MyButton';
 import './styles/App.css';
 
 
@@ -12,6 +14,7 @@ const [posts, setPosts] = useState([
   {id: 3, title: 'Redux', body: 'inscription'},
 ]);
 const [filter, setFilter] = useState({sort: '', query: ''});
+const [modal, setModal] = useState('false');
 
 const sortedPosts = useMemo(() => {
   if (filter.sort) {
@@ -26,27 +29,25 @@ const sortedAndSearchedPosts = useMemo( () => {
 
 const createPost = (newPost) => {
   setPosts([...posts, newPost]);
+  setModal('false');
 }
 
 const removePost = (post) => {
   setPosts(posts.filter(p => p.id !== post.id));
 }
-
-
   
   return (
     <div className="App">
-      <PostForm create={createPost} />
+      <MyButton style={{marginTop: '30px'}} onClick={() => setModal('true')}>
+        Add User
+      </MyButton>
+      <MyModal visible={modal} setVisible={setModal}>
+        <PostForm create={createPost} /> 
+      </MyModal>
+      
       <hr style={{margin: '15px'}} />
       <PostFilter filter={filter} setFilter={setFilter} />
-      {
-        sortedAndSearchedPosts.length !==0
-          ? 
-            <PostList remove={removePost} posts={sortedAndSearchedPosts} title={'Post List for JS'} />
-          : 
-            <h1 style={{textAlign: 'center'}}>Posts not fuind</h1>
-      }
-      
+      <PostList remove={removePost} posts={sortedAndSearchedPosts} title={'Post List for JS'} />
     </div>
   );
 }
