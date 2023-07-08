@@ -1,51 +1,20 @@
-import React, { useState, useMemo } from 'react';
-import PostList from './components/PostList';
-import PostForm from './components/PostForm';
-import PostFilter from './components/PostFilter';
-import './styles/App.css';
+import React from 'react';
+import styles from './MyModyle.module.css';
 
-function App() {
-  const [posts, setPosts] = useState([
-    {id: 1, title: 'JavaScript', body: 'description'},
-    {id: 2, title: 'React', body: 'scription'},
-    {id: 3, title: 'Redux', body: 'inscription'},
-  ]);
-  const [filter, setFilter] = useState({sort: '', query: ''});
+const MyModal = ({children, visible, setVisible}) => {
+  const rootClasses = [styles.myModal];
 
-  const sortedPosts = useMemo(() => {
-    if (filter.sort) {
-      return [...posts].sort((a, b) => a[filter.sort].locationCompare(b[filter.sort]));
-    }
-    return posts;
-  }, [filter.sort, posts]);
-
-  const sortedAndSearchedPosts = useMemo(() => {
-    return sortedPosts.filter(post => post.title.toLowerCase().includes(filter.query))
-  }, [filter.query, sortedPosts]);
-
-  const createPost = (newPost) => {
-    setPosts([...posts], newPost);
-  }
-
-  const removePost = (post) => {
-    setPosts(posts.filter(p => p.id !== post.id));
+  if (visible === 'true') {
+    rootClasses.push(styles.myModalActive);
   }
 
   return (
-    <div className="App">
-      <PostForm create={createPost} />
-      <hr style={{margin: '15px'}} />
-      <PostFilter filter={filter} setFilter={setFilter} />
-      {sortedAndSearchedPosts.length !== 0
-        ?
-          <PostList remove={removePost} posts={sortedAndSearchedPosts} 
-              title={'post list for JS'}/>
-        :
-          <h1 style={{textAlign: 'center'}}>Posts not fuind</h1>
-      }
+    <div className={rootClasses.join(' ')} onClick={() => setVisible(false)}>
+      <div className={styles.myModalContent}>
+        {children}
+      </div>
     </div>
   )
 }
 
-
-export default App;
+export default MyModal;
