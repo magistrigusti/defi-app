@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {usePosts} from './components/hooks/usePosts';
 import PostList from './components/PostList';
 import PostForm from './components/PostForm';
@@ -9,19 +10,24 @@ import './styles/App.css';
 
 
 function App() {
-const [posts, setPosts] = useState([
-  {id: 1, title: 'JavaScript', body: 'description'},
-  {id: 2, title: 'React', body: 'scription'},
-  {id: 3, title: 'Redux', body: 'inscription'},
-]);
+const [posts, setPosts] = useState([]);
 const [filter, setFilter] = useState({sort: '', query: ''});
 const [modal, setModal] = useState('false');
 
 const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query)
 
+useEffect(() => {
+  fetchPosts();
+}, [])
+
 const createPost = (newPost) => {
   setPosts([...posts, newPost]);
   setModal('false');
+}
+
+async function fetchPosts() {
+  const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+  setPosts(response.data);
 }
 
 const removePost = (post) => {
@@ -30,6 +36,7 @@ const removePost = (post) => {
   
   return (
     <div className="App">
+      <button onClick={fetchPosts}>GET POST</button>
       <MyButton style={{marginTop: '30px'}} onClick={() => setModal('true')}>
         Add User
       </MyButton>

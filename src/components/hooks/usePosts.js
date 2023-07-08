@@ -8,7 +8,7 @@ export const useSortedPosts = (posts, sort) => {
     return posts;
   }, [sort, posts]);
 
-  return sortedPosts
+  return sortedPosts;
 }
 
 export const usePosts = (posts, sort, query) => {

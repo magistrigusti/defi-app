@@ -1,20 +1,20 @@
-import React from 'react';
-import styles from './MyModyle.module.css';
+import {useMemo} from 'react';
 
-const MyModal = ({children, visible, setVisible}) => {
-  const rootClasses = [styles.myModal];
-
-  if (visible === 'true') {
-    rootClasses.push(styles.myModalActive);
-  }
-
-  return (
-    <div className={rootClasses.join(' ')} onClick={() => setVisible(false)}>
-      <div className={styles.myModalContent}>
-        {children}
-      </div>
-    </div>
-  )
+export const useSortedPosts = (posts, sort) => {
+  const sortedPosts = useMemo(() => {
+    if (sort) {
+      return [...posts].sort((a, b) => a[sort].localeCompare(b)[sort]);
+    }
+    return posts;
+  }, [sort, posts]);
+  return sortedPosts;
 }
 
-export default MyModal;
+export const usePosts = (posts, sort, query) => {
+  const sortedPosts = useSortedPosts(posts, sort);
+
+  const sortedAndSearchedPosts = useMemo(() => {
+    return sortedPosts.filter(post => post.title.toLowerCase().includes(query))
+  }, [query, sortedPosts]);
+  return sortedAndSearchedPosts;
+}
