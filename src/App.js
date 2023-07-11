@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import PostServise from './API/PostServise';
 import {usePosts} from './components/hooks/usePosts';
 import {useFetching} from './components/hooks/useFetching'
-import {getPageCount, getPagesArray} from './utils/page';
+import {getPageCount} from './utils/page';
 import PostList from './components/PostList';
 import PostForm from './components/PostForm';
 import PostFilter from './components/PostFilter'; 
 import MyModal from './components/UI/MyModal/MyModal';
 import MyButton from './components/UI/button/MyButton';
 import Loader from './components/UI/Loader/Loader';
+import Pagination from './components/UI/pagination/Pagination';
 import './styles/App.css';
 
 
@@ -16,13 +17,12 @@ function App() {
 const [posts, setPosts] = useState([]);
 const [filter, setFilter] = useState({sort: '', query: ''});
 const [modal, setModal] = useState('false');
-const [totalPages, setTotalPages] = useState(10);
+const [totalPages, setTotalPages] = useState(0);
 const [limit, setLimit] = useState(10);
 const [page, setPage] = useState(1);
-let pagesArray = getPagesArray(totalPages);
-console.log(pagesArray)
 
-const [fetchPosts, isPostsLoading, postError] = useFetching( async () => {
+
+const [fetchPosts, isPostsLoading, postError] = useFetching( async (limit, page) => {
   const response = await PostServise.getAll(limit, page);
   setPosts(response.data);
   const totalCount = response.headers['x-total-count'];
@@ -33,7 +33,7 @@ const [fetchPosts, isPostsLoading, postError] = useFetching( async () => {
 const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query)
 
 useEffect(() => {
-  fetchPosts();
+  fetchPosts(limit, page);
 }, [])
 
 const createPost = (newPost) => {
@@ -43,6 +43,11 @@ const createPost = (newPost) => {
 
 const removePost = (post) => {
   setPosts(posts.filter(p => p.id !== post.id));
+}
+
+const changePage = (page) => {
+  setPage(page);
+  fetchPosts(limit, page);
 }
   
   return (
@@ -65,11 +70,7 @@ const removePost = (post) => {
         ? <div style={{display: 'flex', justifyContent: 'center', marginTop: '50px'}}><Loader /></div>
         : <PostList remove={removePost} posts={sortedAndSearchedPosts} title={'Post List for JS'} />
       }
-      <div className='page__wrapper'>
-        {pagesArray.map(page =>
-          <span className="page">{page}</span>
-        )}
-      </div>
+      <Pagination page={page} changePage={changePage} totalPages={totalPages} />
     </div>
   );
 }
