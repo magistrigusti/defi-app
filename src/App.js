@@ -1,15 +1,14 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import Navbar from './components/UI/Navbar/Navbar';
-import AppRouter from './components/AppRouter';
-import './styles/App.css';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { Container } from 'react-bootstrap';
+import './style.css';
+
 
 function App() {
   return (
-    <BrowserRouter>
-        <Navbar />
-        <AppRouter />
-    </BrowserRouter>
+    <Container>
+    
+    </Container>
   )
 }
 
