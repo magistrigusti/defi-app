@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { 
         Row, Col, Form, FormGroup, FormLabel, FormControl, 
         Button, ListGroup, ListGroupItem 
@@ -8,7 +9,11 @@ const Contacts = () => {
   const handleSubmit = (event) => {};
 
   return (
-    <div className="contact">
+    <motion.div className="contact"
+        initial={{ scaleY: 0 }}
+        animate={{ scaleY: 1 }}
+        exit={{ scaleY: 0 }}
+    >
       <h2>Contacts</h2>
 
       <Row>
@@ -39,7 +44,7 @@ const Contacts = () => {
           <div className="contact-data">
               <p>
               If you want to chat about a project — email me on
-              dipesh@malvia.com.
+              mugistrigusti@gmail.com.
             </p>
             <p>
               I can help designing a website, designing a new product, improving
@@ -48,8 +53,8 @@ const Contacts = () => {
               your business.{" "}
             </p>
             <p>
-              Currently based in Wroclaw, Poland — available for remote-friendly
-              work from December 2022.
+              Currently based in Holon, Izrail — available for remote-friendly
+              work from December 2023.
             </p>
 
             <p>
@@ -71,7 +76,7 @@ const Contacts = () => {
           </div>
         </Col>
       </Row>
-    </div>
+    </motion.div>
   )
 }
 
